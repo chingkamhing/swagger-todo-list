@@ -1,3 +1,7 @@
+.PHONY: build
+build:
+	go build -o cmd/todo-list-server/todo-list-server cmd/todo-list-server/*.go
+
 # this command is used to generate an initial swagger.yml to begin with
 # after the initial swagger.yml is generated, add definitions and paths as needed
 # once all definitions and paths are defined, invoke "make generate" to generte server code
@@ -13,4 +17,4 @@ validate:
 # generate server source code base on input of swagger.yml
 .PHONY: generate
 generate: validate
-	swagger generate server --name todo-list --spec ./swagger.yml
+	swagger generate server --name TodoList --spec ./swagger.yml --principal interface{}
