@@ -58,10 +58,10 @@ paths:
             $ref: "#/definitions/error"
   /todo/{id}:
     parameters:
-      - type: integer
-        format: int64
-        name: id
+      - name: id
         in: path
+        type: integer
+        format: int64
         required: true
     put:
       tags:
@@ -84,7 +84,7 @@ paths:
     delete:
       tags:
         - todos
-      operationId: destroyOne
+      operationId: deleteOne
       responses:
         204:
           description: Deleted
