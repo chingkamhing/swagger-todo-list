@@ -5,14 +5,14 @@ info:
   title: A Todo list application
   version: 1.0.0
 consumes:
-- application/io.goswagger.examples.todo-list.v1+json
+- application/json
 produces:
-- application/io.goswagger.examples.todo-list.v1+json
+- application/json
 schemes:
 - http
 - https
 paths:
-  /:
+  /todo/:
     get:
       tags:
         - todos
@@ -56,7 +56,7 @@ paths:
           description: error
           schema:
             $ref: "#/definitions/error"
-  /{id}:
+  /todo/{id}:
     parameters:
       - type: integer
         format: int64
