@@ -10,7 +10,7 @@ import (
 
 	"github.com/go-openapi/runtime"
 
-	"worldleader.com/todo-list/models"
+	"example.com/todo-list/models"
 )
 
 // UpdateOneOKCode is the HTTP code returned for type UpdateOneOK

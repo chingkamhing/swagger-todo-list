@@ -4,14 +4,17 @@ package restapi
 
 import (
 	"crypto/tls"
+	"log"
 	"net/http"
 
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/runtime/middleware"
+	"github.com/go-openapi/swag"
 
-	"worldleader.com/todo-list/restapi/operations"
-	"worldleader.com/todo-list/restapi/operations/todos"
+	"example.com/todo-list/models"
+	"example.com/todo-list/restapi/operations"
+	"example.com/todo-list/restapi/operations/todos"
 )
 
 //go:generate swagger generate server --target ../../todo-list --name TodoList --spec ../swagger.yml --principal interface{}
@@ -28,7 +31,7 @@ func configureAPI(api *operations.TodoListAPI) http.Handler {
 	// Expected interface func(string, ...interface{})
 	//
 	// Example:
-	// api.Logger = log.Printf
+	api.Logger = log.Printf
 
 	api.UseSwaggerUI()
 	// To continue using redoc as your UI, uncomment the following line
@@ -39,15 +42,31 @@ func configureAPI(api *operations.TodoListAPI) http.Handler {
 	api.JSONProducer = runtime.JSONProducer()
 
 	api.TodosAddOneHandler = todos.AddOneHandlerFunc(func(params todos.AddOneParams) middleware.Responder {
+		api.Logger("add todo %+v\n", params.Body)
 		return middleware.NotImplemented("operation todos.AddOne has not yet been implemented")
 	})
 	api.TodosDeleteOneHandler = todos.DeleteOneHandlerFunc(func(params todos.DeleteOneParams) middleware.Responder {
+		api.Logger("delete todo %+v\n", params.ID)
 		return middleware.NotImplemented("operation todos.DestroyOne has not yet been implemented")
 	})
 	api.TodosFindTodosHandler = todos.FindTodosHandlerFunc(func(params todos.FindTodosParams) middleware.Responder {
-		return middleware.NotImplemented("operation todos.FindTodos has not yet been implemented")
+		payload := []*models.Item{
+			{
+				ID:          1,
+				Description: swag.String("Todo task 1"),
+				Completed:   false,
+			},
+			{
+				ID:          2,
+				Description: swag.String("Todo task 2"),
+				Completed:   false,
+			},
+		}
+		api.Logger("get todo %+v %+v\n", params.Since, params.Limit)
+		return todos.NewFindTodosOK().WithPayload(payload)
 	})
 	api.TodosUpdateOneHandler = todos.UpdateOneHandlerFunc(func(params todos.UpdateOneParams) middleware.Responder {
+		api.Logger("update todo %+v\n", params.Body)
 		return middleware.NotImplemented("operation todos.UpdateOne has not yet been implemented")
 	})
 

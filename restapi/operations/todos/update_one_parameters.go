@@ -12,7 +12,7 @@ import (
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/runtime/middleware"
 
-	"worldleader.com/todo-list/models"
+	"example.com/todo-list/models"
 )
 
 // NewUpdateOneParams creates a new UpdateOneParams object

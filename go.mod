@@ -1,4 +1,4 @@
-module worldleader.com/todo-list
+module example.com/todo-list
 
 go 1.15
 

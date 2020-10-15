@@ -2,6 +2,7 @@
 .PHONY: build
 build:
 	go build -o todo-list-server cmd/todo-list-server/*.go
+	go build -o todo-list-client cmd/todo-list-client/*.go
 
 # - generate swagger source codes
 # - build the sources to binar
@@ -29,9 +30,10 @@ validate:
 .PHONY: generate
 generate: validate
 	swagger generate server --name TodoList --spec ./swagger.yml --principal interface{}
+	swagger generate client --name TodoList --spec ./swagger.yml --principal interface{}
 
 # clean all the binary and the generated code
 # note: leave restapi/configure_todo_list.go untouch
 .PHONY: clean
 clean: validate
-	rm -rf cmd models restapi/operations restapi/doc.go restapi/embedded_spec.go restapi/server.go
+	rm -rf client cmd/todo-list-server models restapi/operations restapi/doc.go restapi/embedded_spec.go restapi/server.go
