@@ -1,2 +1,4 @@
 todo-list-server
+!/cmd/todo-list-server
 todo-list-client
+!/cmd/todo-list-client
