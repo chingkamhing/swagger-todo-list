@@ -37,3 +37,4 @@ generate: validate
 .PHONY: clean
 clean: validate
 	rm -rf client cmd/todo-list-server models restapi/operations restapi/doc.go restapi/embedded_spec.go restapi/server.go
+	rm -f todo-list-client todo-list-server
