@@ -59,4 +59,4 @@ fi
 DESCRIPTION=$1
 
 # list all users' info
-curl $OPTS -vd "{\"description\":\"$DESCRIPTION\"}" -H "Content-Type: application/json" -H 'Accept: application/json' ${URL}/${ENDPOINT}
+curl $OPTS -vd "{\"description\":\"$DESCRIPTION\"}" -H "Content-Type: application/json" -H "Accept: application/json" ${URL}/${ENDPOINT}

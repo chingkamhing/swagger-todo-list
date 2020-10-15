@@ -1,29 +1,23 @@
 #!/bin/bash
 #
-# Script file to use curl command to get a list of todo tasks.
+# Script file to use curl command to delete a specified todo task by id.
 #
 
 URL="http://localhost"
 PORT="8888"
 ENDPOINT="todo"
-OPTS="-X GET"
-NUM_ARGS=0
-
-# default parameters
-SINCE=$(date +%s)
-LIMIT=10
+OPTS="-X DELETE"
+NUM_ARGS=1
 
 # Function
 SCRIPT_NAME=${0##*/}
 Usage () {
 	echo
 	echo "Description:"
-	echo "Script file to use curl command to get a list of todo tasks."
+	echo "Script file to use curl command to delete a specified todo task by id."
 	echo
-	echo "Usage: $SCRIPT_NAME [description]"
+	echo "Usage: $SCRIPT_NAME [todo id]"
 	echo "Options:"
-	echo " -s                           Unix time of since when to get the todo list in reverse-chronological order (default: now)"
-	echo " -l                           Number of limit (default: $LIMIT)"
 	echo " -k                           Allow https insecure connection"
 	echo " -u  [url]                    IMS Customer Portal URL"
 	echo " -h                           This help message"
@@ -34,14 +28,6 @@ Usage () {
 while [ "${1:0:1}" == "-" ]; do
 	OPT=${1:1:1}
 	case "$OPT" in
-	"s")
-		SINCE=$2
-		shift
-		;;
-	"l")
-		LIMIT=$2
-		shift
-		;;
 	"k")
 		OPTS="$OPTS -k"
 		;;
@@ -70,12 +56,7 @@ else
 	URL="$(echo -e "${URL}:${PORT}" | sed -e 's/\/*$//')"
 fi
 
-# convert parameter array to http parameter string
-PARAMS=( \
-	"since=$SINCE" \
-	"limit=$LIMIT" \
-)
-PARAMS_STRING=`IFS="&";echo "${PARAMS[*]}";IFS=$`
+ID=$1
 
 # list all users' info
-curl $OPTS -v -H "Content-Type: application/json" -H "Accept: application/json" ${URL}/${ENDPOINT}?${PARAMS_STRING}
+curl $OPTS -v -H "Content-Type: application/json" -H "Accept: application/json" ${URL}/${ENDPOINT}/${ID}
