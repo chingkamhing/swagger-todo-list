@@ -60,4 +60,4 @@ ID=$1
 DESCRIPTION="Task $ID"
 
 # list all users' info
-curl $OPTS -vd "{\"description\":\"$DESCRIPTION\"}" -H "Content-Type: application/json" -H "Accept: application/json" ${URL}/${ENDPOINT}/${ID}
+curl $OPTS -vd "{\"id\":$ID,\"description\":\"$DESCRIPTION\"}" -H "Content-Type: application/json" -H "Accept: application/json" ${URL}/${ENDPOINT}

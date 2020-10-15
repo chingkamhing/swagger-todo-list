@@ -9,18 +9,11 @@ import (
 	"errors"
 	"net/url"
 	golangswaggerpaths "path"
-	"strings"
-
-	"github.com/go-openapi/swag"
 )
 
 // UpdateOneURL generates an URL for the update one operation
 type UpdateOneURL struct {
-	ID int64
-
 	_basePath string
-	// avoid unkeyed usage
-	_ struct{}
 }
 
 // WithBasePath sets the base path for this url builder, only required when it's different from the
@@ -42,14 +35,7 @@ func (o *UpdateOneURL) SetBasePath(bp string) {
 func (o *UpdateOneURL) Build() (*url.URL, error) {
 	var _result url.URL
 
-	var _path = "/todo/{id}"
-
-	id := swag.FormatInt64(o.ID)
-	if id != "" {
-		_path = strings.Replace(_path, "{id}", id, -1)
-	} else {
-		return nil, errors.New("id is required on UpdateOneURL")
-	}
+	var _path = "/todo/"
 
 	_basePath := o._basePath
 	_result.Path = golangswaggerpaths.Join(_basePath, _path)

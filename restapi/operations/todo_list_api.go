@@ -289,7 +289,7 @@ func (o *TodoListAPI) initHandlerCache() {
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
-	o.handlers["PUT"]["/todo/{id}"] = todos.NewUpdateOne(o.context, o.TodosUpdateOneHandler)
+	o.handlers["PUT"]["/todo"] = todos.NewUpdateOne(o.context, o.TodosUpdateOneHandler)
 }
 
 // Serve creates a http handler to serve the API over HTTP

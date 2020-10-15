@@ -74,6 +74,35 @@ func init() {
           }
         }
       },
+      "put": {
+        "tags": [
+          "todos"
+        ],
+        "operationId": "updateOne",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/item"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/item"
+            }
+          },
+          "default": {
+            "description": "error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            }
+          }
+        }
+      },
       "post": {
         "tags": [
           "todos"
@@ -105,35 +134,6 @@ func init() {
       }
     },
     "/todo/{id}": {
-      "put": {
-        "tags": [
-          "todos"
-        ],
-        "operationId": "updateOne",
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "$ref": "#/definitions/item"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/item"
-            }
-          },
-          "default": {
-            "description": "error",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
-          }
-        }
-      },
       "delete": {
         "tags": [
           "todos"
@@ -257,6 +257,35 @@ func init() {
           }
         }
       },
+      "put": {
+        "tags": [
+          "todos"
+        ],
+        "operationId": "updateOne",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/item"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/item"
+            }
+          },
+          "default": {
+            "description": "error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            }
+          }
+        }
+      },
       "post": {
         "tags": [
           "todos"
@@ -288,35 +317,6 @@ func init() {
       }
     },
     "/todo/{id}": {
-      "put": {
-        "tags": [
-          "todos"
-        ],
-        "operationId": "updateOne",
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "$ref": "#/definitions/item"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "schema": {
-              "$ref": "#/definitions/item"
-            }
-          },
-          "default": {
-            "description": "error",
-            "schema": {
-              "$ref": "#/definitions/error"
-            }
-          }
-        }
-      },
       "delete": {
         "tags": [
           "todos"
