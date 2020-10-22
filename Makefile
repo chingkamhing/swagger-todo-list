@@ -24,13 +24,13 @@ init:
 # validate if swagger.yml is valid
 .PHONY: validate
 validate:
-	swagger validate ./swagger.yml
+	swagger validate ./swagger/swagger.yml
 
 # generate server source code base on input of swagger.yml
 .PHONY: generate
 generate: validate
-	swagger generate server --name TodoList --spec ./swagger.yml --principal interface{}
-	swagger generate client --name TodoList --spec ./swagger.yml --principal interface{}
+	swagger generate server --name TodoList --spec ./swagger/swagger.yml --principal interface{}
+	swagger generate client --name TodoList --spec ./swagger/swagger.yml --principal interface{}
 
 # clean all the binary and the generated code
 # note: leave restapi/configure_todo_list.go untouch
