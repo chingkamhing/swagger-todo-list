@@ -42,7 +42,7 @@ func (o *FindTodosURL) SetBasePath(bp string) {
 func (o *FindTodosURL) Build() (*url.URL, error) {
 	var _result url.URL
 
-	var _path = "/todo/"
+	var _path = "/api/todo/"
 
 	_basePath := o._basePath
 	_result.Path = golangswaggerpaths.Join(_basePath, _path)

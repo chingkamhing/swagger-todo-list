@@ -55,7 +55,7 @@ type AddOneCreated struct {
 }
 
 func (o *AddOneCreated) Error() string {
-	return fmt.Sprintf("[POST /todo/][%d] addOneCreated  %+v", 201, o.Payload)
+	return fmt.Sprintf("[POST /api/todo/][%d] addOneCreated  %+v", 201, o.Payload)
 }
 
 func (o *AddOneCreated) GetPayload() *models.Item {
@@ -97,7 +97,7 @@ func (o *AddOneDefault) Code() int {
 }
 
 func (o *AddOneDefault) Error() string {
-	return fmt.Sprintf("[POST /todo/][%d] addOne default  %+v", o._statusCode, o.Payload)
+	return fmt.Sprintf("[POST /api/todo/][%d] addOne default  %+v", o._statusCode, o.Payload)
 }
 
 func (o *AddOneDefault) GetPayload() *models.Error {

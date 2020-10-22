@@ -55,7 +55,7 @@ type UpdateOneOK struct {
 }
 
 func (o *UpdateOneOK) Error() string {
-	return fmt.Sprintf("[PUT /todo/][%d] updateOneOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[PUT /api/todo/][%d] updateOneOK  %+v", 200, o.Payload)
 }
 
 func (o *UpdateOneOK) GetPayload() *models.Item {
@@ -97,7 +97,7 @@ func (o *UpdateOneDefault) Code() int {
 }
 
 func (o *UpdateOneDefault) Error() string {
-	return fmt.Sprintf("[PUT /todo/][%d] updateOne default  %+v", o._statusCode, o.Payload)
+	return fmt.Sprintf("[PUT /api/todo/][%d] updateOne default  %+v", o._statusCode, o.Payload)
 }
 
 func (o *UpdateOneDefault) GetPayload() *models.Error {

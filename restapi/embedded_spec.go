@@ -35,7 +35,7 @@ func init() {
     "version": "1.0.0"
   },
   "paths": {
-    "/todo/": {
+    "/api/todo/": {
       "get": {
         "tags": [
           "todos"
@@ -133,7 +133,7 @@ func init() {
         }
       }
     },
-    "/todo/{id}": {
+    "/api/todo/{id}": {
       "delete": {
         "tags": [
           "todos"
@@ -218,7 +218,7 @@ func init() {
     "version": "1.0.0"
   },
   "paths": {
-    "/todo/": {
+    "/api/todo/": {
       "get": {
         "tags": [
           "todos"
@@ -316,7 +316,7 @@ func init() {
         }
       }
     },
-    "/todo/{id}": {
+    "/api/todo/{id}": {
       "delete": {
         "tags": [
           "todos"

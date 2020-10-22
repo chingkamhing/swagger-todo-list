@@ -42,7 +42,7 @@ func (o *DeleteOneURL) SetBasePath(bp string) {
 func (o *DeleteOneURL) Build() (*url.URL, error) {
 	var _result url.URL
 
-	var _path = "/todo/{id}"
+	var _path = "/api/todo/{id}"
 
 	id := swag.FormatInt64(o.ID)
 	if id != "" {

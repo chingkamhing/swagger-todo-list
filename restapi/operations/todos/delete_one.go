@@ -29,7 +29,7 @@ func NewDeleteOne(ctx *middleware.Context, handler DeleteOneHandler) *DeleteOne 
 	return &DeleteOne{Context: ctx, Handler: handler}
 }
 
-/*DeleteOne swagger:route DELETE /todo/{id} todos deleteOne
+/*DeleteOne swagger:route DELETE /api/todo/{id} todos deleteOne
 
 DeleteOne delete one API
 

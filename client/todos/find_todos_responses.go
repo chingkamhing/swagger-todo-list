@@ -55,7 +55,7 @@ type FindTodosOK struct {
 }
 
 func (o *FindTodosOK) Error() string {
-	return fmt.Sprintf("[GET /todo/][%d] findTodosOK  %+v", 200, o.Payload)
+	return fmt.Sprintf("[GET /api/todo/][%d] findTodosOK  %+v", 200, o.Payload)
 }
 
 func (o *FindTodosOK) GetPayload() []*models.Item {
@@ -95,7 +95,7 @@ func (o *FindTodosDefault) Code() int {
 }
 
 func (o *FindTodosDefault) Error() string {
-	return fmt.Sprintf("[GET /todo/][%d] findTodos default  %+v", o._statusCode, o.Payload)
+	return fmt.Sprintf("[GET /api/todo/][%d] findTodos default  %+v", o._statusCode, o.Payload)
 }
 
 func (o *FindTodosDefault) GetPayload() *models.Error {

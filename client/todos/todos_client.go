@@ -48,7 +48,7 @@ func (a *Client) AddOne(params *AddOneParams) (*AddOneCreated, error) {
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "addOne",
 		Method:             "POST",
-		PathPattern:        "/todo/",
+		PathPattern:        "/api/todo/",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -81,7 +81,7 @@ func (a *Client) DeleteOne(params *DeleteOneParams) (*DeleteOneNoContent, error)
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "deleteOne",
 		Method:             "DELETE",
-		PathPattern:        "/todo/{id}",
+		PathPattern:        "/api/todo/{id}",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -114,7 +114,7 @@ func (a *Client) FindTodos(params *FindTodosParams) (*FindTodosOK, error) {
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "findTodos",
 		Method:             "GET",
-		PathPattern:        "/todo/",
+		PathPattern:        "/api/todo/",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},
@@ -147,7 +147,7 @@ func (a *Client) UpdateOne(params *UpdateOneParams) (*UpdateOneOK, error) {
 	result, err := a.transport.Submit(&runtime.ClientOperation{
 		ID:                 "updateOne",
 		Method:             "PUT",
-		PathPattern:        "/todo/",
+		PathPattern:        "/api/todo/",
 		ProducesMediaTypes: []string{"application/json"},
 		ConsumesMediaTypes: []string{"application/json"},
 		Schemes:            []string{"http", "https"},

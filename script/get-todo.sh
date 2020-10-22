@@ -5,7 +5,7 @@
 
 URL="http://localhost"
 PORT="8888"
-ENDPOINT="todo"
+ENDPOINT="api/todo"
 OPTS="-X GET"
 NUM_ARGS=0
 

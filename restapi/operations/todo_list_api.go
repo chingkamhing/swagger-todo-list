@@ -277,19 +277,19 @@ func (o *TodoListAPI) initHandlerCache() {
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
-	o.handlers["POST"]["/todo"] = todos.NewAddOne(o.context, o.TodosAddOneHandler)
+	o.handlers["POST"]["/api/todo"] = todos.NewAddOne(o.context, o.TodosAddOneHandler)
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
-	o.handlers["DELETE"]["/todo/{id}"] = todos.NewDeleteOne(o.context, o.TodosDeleteOneHandler)
+	o.handlers["DELETE"]["/api/todo/{id}"] = todos.NewDeleteOne(o.context, o.TodosDeleteOneHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
-	o.handlers["GET"]["/todo"] = todos.NewFindTodos(o.context, o.TodosFindTodosHandler)
+	o.handlers["GET"]["/api/todo"] = todos.NewFindTodos(o.context, o.TodosFindTodosHandler)
 	if o.handlers["PUT"] == nil {
 		o.handlers["PUT"] = make(map[string]http.Handler)
 	}
-	o.handlers["PUT"]["/todo"] = todos.NewUpdateOne(o.context, o.TodosUpdateOneHandler)
+	o.handlers["PUT"]["/api/todo"] = todos.NewUpdateOne(o.context, o.TodosUpdateOneHandler)
 }
 
 // Serve creates a http handler to serve the API over HTTP

@@ -12,7 +12,7 @@ schemes:
 - http
 - https
 paths:
-  /todo/:
+  /api/todo/:
     get:
       tags:
         - todos
@@ -74,7 +74,7 @@ paths:
           description: error
           schema:
             $ref: "#/definitions/error"
-  /todo/{id}:
+  /api/todo/{id}:
     parameters:
       - name: id
         in: path

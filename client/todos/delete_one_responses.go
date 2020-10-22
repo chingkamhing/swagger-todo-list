@@ -54,7 +54,7 @@ type DeleteOneNoContent struct {
 }
 
 func (o *DeleteOneNoContent) Error() string {
-	return fmt.Sprintf("[DELETE /todo/{id}][%d] deleteOneNoContent ", 204)
+	return fmt.Sprintf("[DELETE /api/todo/{id}][%d] deleteOneNoContent ", 204)
 }
 
 func (o *DeleteOneNoContent) readResponse(response runtime.ClientResponse, consumer runtime.Consumer, formats strfmt.Registry) error {
@@ -85,7 +85,7 @@ func (o *DeleteOneDefault) Code() int {
 }
 
 func (o *DeleteOneDefault) Error() string {
-	return fmt.Sprintf("[DELETE /todo/{id}][%d] deleteOne default  %+v", o._statusCode, o.Payload)
+	return fmt.Sprintf("[DELETE /api/todo/{id}][%d] deleteOne default  %+v", o._statusCode, o.Payload)
 }
 
 func (o *DeleteOneDefault) GetPayload() *models.Error {
