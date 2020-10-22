@@ -12,6 +12,7 @@ import (
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/go-openapi/swag"
 
+	todoMiddleware "example.com/todo-list/middleware"
 	"example.com/todo-list/models"
 	"example.com/todo-list/restapi/operations"
 	"example.com/todo-list/restapi/operations/todos"
@@ -47,7 +48,8 @@ func configureAPI(api *operations.TodoListAPI) http.Handler {
 	})
 	api.TodosDeleteOneHandler = todos.DeleteOneHandlerFunc(func(params todos.DeleteOneParams) middleware.Responder {
 		api.Logger("delete todo %+v\n", params.ID)
-		return middleware.NotImplemented("operation todos.DestroyOne has not yet been implemented")
+		panic("you should not have a handler that just panics ;)")
+		// return middleware.NotImplemented("operation todos.DestroyOne has not yet been implemented")
 	})
 	api.TodosFindTodosHandler = todos.FindTodosHandlerFunc(func(params todos.FindTodosParams) middleware.Responder {
 		payload := []*models.Item{
@@ -87,16 +89,27 @@ func configureTLS(tlsConfig *tls.Config) {
 // This function can be called multiple times, depending on the number of serving schemes.
 // scheme value will be set accordingly: "http", "https" or "unix"
 func configureServer(s *http.Server, scheme, addr string) {
+	log.Printf("configureServer()\n")
+	switch scheme {
+	case schemeHTTP:
+		log.Printf("server, scheme: %v\n", scheme)
+	case schemeHTTPS:
+		log.Printf("server, scheme: %v\n", scheme)
+	case schemeUnix:
+		log.Printf("server, scheme: %v\n", scheme)
+	}
 }
 
 // The middleware configuration is for the handler executors. These do not apply to the swagger.json document.
 // The middleware executes after routing but before authentication, binding and validation
 func setupMiddlewares(handler http.Handler) http.Handler {
+	log.Printf("setupMiddlewares()\n")
 	return handler
 }
 
 // The middleware configuration happens before anything, this middleware also applies to serving the swagger.json document.
 // So this is a good place to plug in a panic handling middleware, logging and metrics
 func setupGlobalMiddleware(handler http.Handler) http.Handler {
-	return handler
+	log.Printf("setupGlobalMiddleware()\n")
+	return todoMiddleware.Recover(todoMiddleware.Logger(todoMiddleware.StaticFileServer(handler)))
 }
