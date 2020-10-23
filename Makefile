@@ -19,7 +19,16 @@ update:
 # once all definitions and paths are defined, invoke "make generate" to generte server code
 .PHONY: init
 init:
-	swagger init spec --title "A Todo list application" --description "From the todo list tutorial on goswagger.io" --version 1.0.0 --scheme http --consumes application/io.goswagger.examples.todo-list.v1+json --produces application/io.goswagger.examples.todo-list.v1+json
+	mkdir -p swagger && \
+	cd swagger && \
+	swagger init spec \
+		--title "A Todo list application" \
+		--description "From the todo list tutorial on goswagger.io" \
+		--version 1.0.0 \
+		--scheme http \
+		--consumes application/json \
+		--produces application/json && \
+	cd -
 
 # validate if swagger.yml is valid
 .PHONY: validate
@@ -36,5 +45,7 @@ generate: validate
 # note: leave restapi/configure_todo_list.go untouch
 .PHONY: clean
 clean: validate
+	# remove all the generated sources
 	rm -rf client cmd/todo-list-server models restapi/operations restapi/doc.go restapi/embedded_spec.go restapi/server.go
+	# remove all the compiled binaries
 	rm -f todo-list-client todo-list-server
