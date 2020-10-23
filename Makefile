@@ -38,7 +38,7 @@ validate:
 # generate server source code base on input of swagger.yml
 .PHONY: generate
 generate: validate
-	swagger generate server --name TodoList --spec ./swagger/swagger.yml --principal interface{}
+	swagger generate server --name TodoList --spec ./swagger/swagger.yml --principal interface{} --exclude-main
 	swagger generate client --name TodoList --spec ./swagger/swagger.yml --principal interface{}
 
 # clean all the binary and the generated code
