@@ -107,7 +107,7 @@ func configureServer(s *http.Server, scheme, addr string) {
 // The middleware executes after routing but before authentication, binding and validation
 func setupMiddlewares(handler http.Handler) http.Handler {
 	log.Printf("setupMiddlewares()\n")
-	return handler
+	return todoMiddleware.HandlerLogger(handler)
 }
 
 // The middleware configuration happens before anything, this middleware also applies to serving the swagger.json document.
@@ -117,5 +117,8 @@ func setupGlobalMiddleware(handler http.Handler) http.Handler {
 	return todoMiddleware.Recover(
 		todoMiddleware.Logger(
 			todoMiddleware.BasicAuthen("admin", "AdminPassword",
-				todoMiddleware.StaticFileServer(staticFilePath, handler))))
+				todoMiddleware.StaticFileServer(staticFilePath, handler),
+			),
+		),
+	)
 }
