@@ -19,7 +19,7 @@ import (
 )
 
 // static file path
-const staticFilePath = "./public"
+const staticFilePath = "./build"
 
 //go:generate swagger generate server --target ../../todo-list --name TodoList --spec ../swagger.yml --principal interface{}
 
@@ -114,5 +114,8 @@ func setupMiddlewares(handler http.Handler) http.Handler {
 // So this is a good place to plug in a panic handling middleware, logging and metrics
 func setupGlobalMiddleware(handler http.Handler) http.Handler {
 	log.Printf("setupGlobalMiddleware()\n")
-	return todoMiddleware.Recover(todoMiddleware.Logger(todoMiddleware.StaticFileServer(staticFilePath, handler)))
+	return todoMiddleware.Recover(
+		todoMiddleware.Logger(
+			todoMiddleware.BasicAuthen("admin", "AdminPassword",
+				todoMiddleware.StaticFileServer(staticFilePath, handler))))
 }

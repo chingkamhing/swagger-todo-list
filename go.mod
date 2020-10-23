@@ -12,6 +12,7 @@ require (
 	github.com/go-openapi/strfmt v0.19.6
 	github.com/go-openapi/swag v0.19.9
 	github.com/go-openapi/validate v0.19.11
+	github.com/goji/httpauth v0.0.0-20160601135302-2da839ab0f4d
 	github.com/jessevdk/go-flags v1.4.0
 	github.com/mailru/easyjson v0.7.6 // indirect
 	github.com/mitchellh/mapstructure v1.3.3 // indirect
