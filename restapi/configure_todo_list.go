@@ -18,6 +18,9 @@ import (
 	"example.com/todo-list/restapi/operations/todos"
 )
 
+// static file path
+const staticFilePath = "./public"
+
 //go:generate swagger generate server --target ../../todo-list --name TodoList --spec ../swagger.yml --principal interface{}
 
 func configureFlags(api *operations.TodoListAPI) {
@@ -111,5 +114,5 @@ func setupMiddlewares(handler http.Handler) http.Handler {
 // So this is a good place to plug in a panic handling middleware, logging and metrics
 func setupGlobalMiddleware(handler http.Handler) http.Handler {
 	log.Printf("setupGlobalMiddleware()\n")
-	return todoMiddleware.Recover(todoMiddleware.Logger(todoMiddleware.StaticFileServer(handler)))
+	return todoMiddleware.Recover(todoMiddleware.Logger(todoMiddleware.StaticFileServer(staticFilePath, handler)))
 }
