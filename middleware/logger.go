@@ -18,6 +18,7 @@ func HandlerLogger(next http.Handler) http.Handler {
 		method := r.Method
 		url := r.URL.Path
 		log.Printf("[%v] %v\n", method, url)
+		next.ServeHTTP(w, r)
 	}
 	return http.HandlerFunc(fn)
 }
