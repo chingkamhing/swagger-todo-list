@@ -28,9 +28,8 @@ var errUserSecurityAuth = errors.New(http.StatusUnauthorized, "user security aut
 // static file path
 const staticFilePath = "./build"
 
-// authenUser hard code user name
-const authenUser = "admin"
-const authenPassword = "MyPassword"
+// apiKey hard code token
+const authenApiKey = "MySecureAPIKey"
 
 //go:generate swagger generate server --target ../../swagger-todo-list --name TodoList --spec ../swagger/swagger.yml --principal interface{} --exclude-main
 
@@ -57,12 +56,12 @@ func configureAPI(api *operations.TodoListAPI) http.Handler {
 	api.JSONProducer = runtime.JSONProducer()
 
 	// Applies when the Authorization header is set with the Basic scheme
-	api.UserSecurityAuth = func(user string, pass string) (interface{}, error) {
-		log.Printf("UserSecurityAuth: %v %v\n", user, pass)
-		if user != authenUser || pass != authenPassword {
+	api.UserSecurityAuth = func(token string) (interface{}, error) {
+		log.Printf("UserSecurityAuth: %v\n", token)
+		if token != authenApiKey {
 			return nil, errUserSecurityAuth
 		}
-		return myPrincipal{user: user}, nil
+		return myPrincipal{user: "admin"}, nil
 	}
 
 	api.TodosAddOneHandler = todos.AddOneHandlerFunc(func(params todos.AddOneParams, principal interface{}) middleware.Responder {

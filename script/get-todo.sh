@@ -78,5 +78,5 @@ PARAMS=( \
 PARAMS_STRING=`IFS="&";echo "${PARAMS[*]}";IFS=$`
 
 # list all users' info
-curl $OPTS -v -H "Content-Type: application/json" -H "Accept: application/json" -H "Authorization: Basic YWRtaW46TXlQYXNzd29yZA==" ${URL}/${ENDPOINT}?${PARAMS_STRING}
-# curl $OPTS -v -H "Content-Type: application/json" -H "Accept: application/json" -H 'X-Token: abcdefuvwxyz' ${URL}/${ENDPOINT}?${PARAMS_STRING}
+# curl $OPTS -v -H "Content-Type: application/json" -H "Accept: application/json" -H "Authorization: Basic YWRtaW46TXlQYXNzd29yZA==" ${URL}/${ENDPOINT}?${PARAMS_STRING}
+curl $OPTS -v -H "Content-Type: application/json" -H "Accept: application/json" -H 'MY-API-KEY: MySecureAPIKey' ${URL}/${ENDPOINT}?${PARAMS_STRING}

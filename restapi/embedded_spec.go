@@ -204,7 +204,9 @@ func init() {
       "type": "basic"
     },
     "UserSecurity": {
-      "type": "basic"
+      "type": "apiKey",
+      "name": "MY-API-KEY",
+      "in": "header"
     }
   },
   "security": [
@@ -400,7 +402,9 @@ func init() {
       "type": "basic"
     },
     "UserSecurity": {
-      "type": "basic"
+      "type": "apiKey",
+      "name": "MY-API-KEY",
+      "in": "header"
     }
   },
   "security": [

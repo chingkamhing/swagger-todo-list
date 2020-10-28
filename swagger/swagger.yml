@@ -13,7 +13,9 @@ schemes:
 - https
 securityDefinitions:
   UserSecurity:
-    type: basic
+    type: apiKey
+    in: header
+    name: MY-API-KEY
   AdminSecurity:
     type: basic
 # apply all of the below endpoints with this security

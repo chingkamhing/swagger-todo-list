@@ -57,9 +57,9 @@ func NewTodoListAPI(spec *loads.Document) *TodoListAPI {
 			return middleware.NotImplemented("operation todos.UpdateOne has not yet been implemented")
 		}),
 
-		// Applies when the Authorization header is set with the Basic scheme
-		UserSecurityAuth: func(user string, pass string) (interface{}, error) {
-			return nil, errors.NotImplemented("basic auth  (UserSecurity) has not yet been implemented")
+		// Applies when the "MY-API-KEY" header is set
+		UserSecurityAuth: func(token string) (interface{}, error) {
+			return nil, errors.NotImplemented("api key auth (UserSecurity) MY-API-KEY from header param [MY-API-KEY] has not yet been implemented")
 		},
 		// default authorizer is authorized meaning no requests are blocked
 		APIAuthorizer: security.Authorized(),
@@ -97,9 +97,9 @@ type TodoListAPI struct {
 	//   - application/json
 	JSONProducer runtime.Producer
 
-	// UserSecurityAuth registers a function that takes username and password and returns a principal
-	// it performs authentication with basic auth
-	UserSecurityAuth func(string, string) (interface{}, error)
+	// UserSecurityAuth registers a function that takes a token and returns a principal
+	// it performs authentication based on an api key MY-API-KEY provided in the header
+	UserSecurityAuth func(string) (interface{}, error)
 
 	// APIAuthorizer provides access control (ACL/RBAC/ABAC) by providing access to the request and authenticated principal
 	APIAuthorizer runtime.Authorizer
@@ -189,7 +189,7 @@ func (o *TodoListAPI) Validate() error {
 	}
 
 	if o.UserSecurityAuth == nil {
-		unregistered = append(unregistered, "UserSecurityAuth")
+		unregistered = append(unregistered, "MYAPIKEYAuth")
 	}
 
 	if o.TodosAddOneHandler == nil {
@@ -223,7 +223,8 @@ func (o *TodoListAPI) AuthenticatorsFor(schemes map[string]spec.SecurityScheme) 
 	for name := range schemes {
 		switch name {
 		case "UserSecurity":
-			result[name] = o.BasicAuthenticator(o.UserSecurityAuth)
+			scheme := schemes[name]
+			result[name] = o.APIKeyAuthenticator(scheme.Name, scheme.In, o.UserSecurityAuth)
 
 		}
 	}
