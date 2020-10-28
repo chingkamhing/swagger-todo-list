@@ -11,6 +11,14 @@ produces:
 schemes:
 - http
 - https
+securityDefinitions:
+  UserSecurity:
+    type: basic
+  AdminSecurity:
+    type: basic
+# apply all of the below endpoints with this security
+security:
+  - UserSecurity: []
 paths:
   /api/todo/:
     get:

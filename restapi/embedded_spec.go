@@ -198,7 +198,20 @@ func init() {
         }
       }
     }
-  }
+  },
+  "securityDefinitions": {
+    "AdminSecurity": {
+      "type": "basic"
+    },
+    "UserSecurity": {
+      "type": "basic"
+    }
+  },
+  "security": [
+    {
+      "UserSecurity": []
+    }
+  ]
 }`))
 	FlatSwaggerJSON = json.RawMessage([]byte(`{
   "consumes": [
@@ -381,6 +394,19 @@ func init() {
         }
       }
     }
-  }
+  },
+  "securityDefinitions": {
+    "AdminSecurity": {
+      "type": "basic"
+    },
+    "UserSecurity": {
+      "type": "basic"
+    }
+  },
+  "security": [
+    {
+      "UserSecurity": []
+    }
+  ]
 }`))
 }

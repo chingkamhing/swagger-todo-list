@@ -44,18 +44,25 @@ func NewTodoListAPI(spec *loads.Document) *TodoListAPI {
 
 		JSONProducer: runtime.JSONProducer(),
 
-		TodosAddOneHandler: todos.AddOneHandlerFunc(func(params todos.AddOneParams) middleware.Responder {
+		TodosAddOneHandler: todos.AddOneHandlerFunc(func(params todos.AddOneParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation todos.AddOne has not yet been implemented")
 		}),
-		TodosDeleteOneHandler: todos.DeleteOneHandlerFunc(func(params todos.DeleteOneParams) middleware.Responder {
+		TodosDeleteOneHandler: todos.DeleteOneHandlerFunc(func(params todos.DeleteOneParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation todos.DeleteOne has not yet been implemented")
 		}),
-		TodosFindTodosHandler: todos.FindTodosHandlerFunc(func(params todos.FindTodosParams) middleware.Responder {
+		TodosFindTodosHandler: todos.FindTodosHandlerFunc(func(params todos.FindTodosParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation todos.FindTodos has not yet been implemented")
 		}),
-		TodosUpdateOneHandler: todos.UpdateOneHandlerFunc(func(params todos.UpdateOneParams) middleware.Responder {
+		TodosUpdateOneHandler: todos.UpdateOneHandlerFunc(func(params todos.UpdateOneParams, principal interface{}) middleware.Responder {
 			return middleware.NotImplemented("operation todos.UpdateOne has not yet been implemented")
 		}),
+
+		// Applies when the Authorization header is set with the Basic scheme
+		UserSecurityAuth: func(user string, pass string) (interface{}, error) {
+			return nil, errors.NotImplemented("basic auth  (UserSecurity) has not yet been implemented")
+		},
+		// default authorizer is authorized meaning no requests are blocked
+		APIAuthorizer: security.Authorized(),
 	}
 }
 
@@ -89,6 +96,13 @@ type TodoListAPI struct {
 	// JSONProducer registers a producer for the following mime types:
 	//   - application/json
 	JSONProducer runtime.Producer
+
+	// UserSecurityAuth registers a function that takes username and password and returns a principal
+	// it performs authentication with basic auth
+	UserSecurityAuth func(string, string) (interface{}, error)
+
+	// APIAuthorizer provides access control (ACL/RBAC/ABAC) by providing access to the request and authenticated principal
+	APIAuthorizer runtime.Authorizer
 
 	// TodosAddOneHandler sets the operation handler for the add one operation
 	TodosAddOneHandler todos.AddOneHandler
@@ -174,6 +188,10 @@ func (o *TodoListAPI) Validate() error {
 		unregistered = append(unregistered, "JSONProducer")
 	}
 
+	if o.UserSecurityAuth == nil {
+		unregistered = append(unregistered, "UserSecurityAuth")
+	}
+
 	if o.TodosAddOneHandler == nil {
 		unregistered = append(unregistered, "todos.AddOneHandler")
 	}
@@ -201,12 +219,20 @@ func (o *TodoListAPI) ServeErrorFor(operationID string) func(http.ResponseWriter
 
 // AuthenticatorsFor gets the authenticators for the specified security schemes
 func (o *TodoListAPI) AuthenticatorsFor(schemes map[string]spec.SecurityScheme) map[string]runtime.Authenticator {
-	return nil
+	result := make(map[string]runtime.Authenticator)
+	for name := range schemes {
+		switch name {
+		case "UserSecurity":
+			result[name] = o.BasicAuthenticator(o.UserSecurityAuth)
+
+		}
+	}
+	return result
 }
 
 // Authorizer returns the registered authorizer
 func (o *TodoListAPI) Authorizer() runtime.Authorizer {
-	return nil
+	return o.APIAuthorizer
 }
 
 // ConsumersFor gets the consumers for the specified media types.

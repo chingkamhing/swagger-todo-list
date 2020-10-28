@@ -18,10 +18,21 @@ import (
 	"example.com/todo-list/restapi/operations/todos"
 )
 
+// myPrincipal define the authenticated user's info
+type myPrincipal struct {
+	user string
+}
+
+var errUserSecurityAuth = errors.New(http.StatusUnauthorized, "user security authentication error")
+
 // static file path
 const staticFilePath = "./build"
 
-//go:generate swagger generate server --target ../../todo-list --name TodoList --spec ../swagger.yml --principal interface{}
+// authenUser hard code user name
+const authenUser = "admin"
+const authenPassword = "MyPassword"
+
+//go:generate swagger generate server --target ../../swagger-todo-list --name TodoList --spec ../swagger/swagger.yml --principal interface{} --exclude-main
 
 func configureFlags(api *operations.TodoListAPI) {
 	// api.CommandLineOptionsGroups = []swag.CommandLineOptionsGroup{ ... }
@@ -45,16 +56,25 @@ func configureAPI(api *operations.TodoListAPI) http.Handler {
 
 	api.JSONProducer = runtime.JSONProducer()
 
-	api.TodosAddOneHandler = todos.AddOneHandlerFunc(func(params todos.AddOneParams) middleware.Responder {
+	// Applies when the Authorization header is set with the Basic scheme
+	api.UserSecurityAuth = func(user string, pass string) (interface{}, error) {
+		log.Printf("UserSecurityAuth: %v %v\n", user, pass)
+		if user != authenUser || pass != authenPassword {
+			return nil, errUserSecurityAuth
+		}
+		return myPrincipal{user: user}, nil
+	}
+
+	api.TodosAddOneHandler = todos.AddOneHandlerFunc(func(params todos.AddOneParams, principal interface{}) middleware.Responder {
 		api.Logger("add todo %+v\n", params.Body)
 		return middleware.NotImplemented("operation todos.AddOne has not yet been implemented")
 	})
-	api.TodosDeleteOneHandler = todos.DeleteOneHandlerFunc(func(params todos.DeleteOneParams) middleware.Responder {
+	api.TodosDeleteOneHandler = todos.DeleteOneHandlerFunc(func(params todos.DeleteOneParams, principal interface{}) middleware.Responder {
 		api.Logger("delete todo %+v\n", params.ID)
 		panic("you should not have a handler that just panics ;)")
 		// return middleware.NotImplemented("operation todos.DestroyOne has not yet been implemented")
 	})
-	api.TodosFindTodosHandler = todos.FindTodosHandlerFunc(func(params todos.FindTodosParams) middleware.Responder {
+	api.TodosFindTodosHandler = todos.FindTodosHandlerFunc(func(params todos.FindTodosParams, principal interface{}) middleware.Responder {
 		payload := []*models.Item{
 			{
 				ID:          1,
@@ -67,10 +87,10 @@ func configureAPI(api *operations.TodoListAPI) http.Handler {
 				Completed:   false,
 			},
 		}
-		api.Logger("get todo %+v %+v\n", params.Since, params.Limit)
+		api.Logger("get todo %+v %+v %+v\n", principal, *params.Since, *params.Limit)
 		return todos.NewFindTodosOK().WithPayload(payload)
 	})
-	api.TodosUpdateOneHandler = todos.UpdateOneHandlerFunc(func(params todos.UpdateOneParams) middleware.Responder {
+	api.TodosUpdateOneHandler = todos.UpdateOneHandlerFunc(func(params todos.UpdateOneParams, principal interface{}) middleware.Responder {
 		api.Logger("update todo %+v\n", params.Body)
 		return middleware.NotImplemented("operation todos.UpdateOne has not yet been implemented")
 	})

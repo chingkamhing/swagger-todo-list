@@ -25,13 +25,13 @@ type Client struct {
 
 // ClientService is the interface for Client methods
 type ClientService interface {
-	AddOne(params *AddOneParams) (*AddOneCreated, error)
+	AddOne(params *AddOneParams, authInfo runtime.ClientAuthInfoWriter) (*AddOneCreated, error)
 
-	DeleteOne(params *DeleteOneParams) (*DeleteOneNoContent, error)
+	DeleteOne(params *DeleteOneParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteOneNoContent, error)
 
-	FindTodos(params *FindTodosParams) (*FindTodosOK, error)
+	FindTodos(params *FindTodosParams, authInfo runtime.ClientAuthInfoWriter) (*FindTodosOK, error)
 
-	UpdateOne(params *UpdateOneParams) (*UpdateOneOK, error)
+	UpdateOne(params *UpdateOneParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateOneOK, error)
 
 	SetTransport(transport runtime.ClientTransport)
 }
@@ -39,7 +39,7 @@ type ClientService interface {
 /*
   AddOne add one API
 */
-func (a *Client) AddOne(params *AddOneParams) (*AddOneCreated, error) {
+func (a *Client) AddOne(params *AddOneParams, authInfo runtime.ClientAuthInfoWriter) (*AddOneCreated, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewAddOneParams()
@@ -54,6 +54,7 @@ func (a *Client) AddOne(params *AddOneParams) (*AddOneCreated, error) {
 		Schemes:            []string{"http", "https"},
 		Params:             params,
 		Reader:             &AddOneReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
@@ -72,7 +73,7 @@ func (a *Client) AddOne(params *AddOneParams) (*AddOneCreated, error) {
 /*
   DeleteOne delete one API
 */
-func (a *Client) DeleteOne(params *DeleteOneParams) (*DeleteOneNoContent, error) {
+func (a *Client) DeleteOne(params *DeleteOneParams, authInfo runtime.ClientAuthInfoWriter) (*DeleteOneNoContent, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewDeleteOneParams()
@@ -87,6 +88,7 @@ func (a *Client) DeleteOne(params *DeleteOneParams) (*DeleteOneNoContent, error)
 		Schemes:            []string{"http", "https"},
 		Params:             params,
 		Reader:             &DeleteOneReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
@@ -105,7 +107,7 @@ func (a *Client) DeleteOne(params *DeleteOneParams) (*DeleteOneNoContent, error)
 /*
   FindTodos find todos API
 */
-func (a *Client) FindTodos(params *FindTodosParams) (*FindTodosOK, error) {
+func (a *Client) FindTodos(params *FindTodosParams, authInfo runtime.ClientAuthInfoWriter) (*FindTodosOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewFindTodosParams()
@@ -120,6 +122,7 @@ func (a *Client) FindTodos(params *FindTodosParams) (*FindTodosOK, error) {
 		Schemes:            []string{"http", "https"},
 		Params:             params,
 		Reader:             &FindTodosReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
@@ -138,7 +141,7 @@ func (a *Client) FindTodos(params *FindTodosParams) (*FindTodosOK, error) {
 /*
   UpdateOne update one API
 */
-func (a *Client) UpdateOne(params *UpdateOneParams) (*UpdateOneOK, error) {
+func (a *Client) UpdateOne(params *UpdateOneParams, authInfo runtime.ClientAuthInfoWriter) (*UpdateOneOK, error) {
 	// TODO: Validate the params before sending
 	if params == nil {
 		params = NewUpdateOneParams()
@@ -153,6 +156,7 @@ func (a *Client) UpdateOne(params *UpdateOneParams) (*UpdateOneOK, error) {
 		Schemes:            []string{"http", "https"},
 		Params:             params,
 		Reader:             &UpdateOneReader{formats: a.formats},
+		AuthInfo:           authInfo,
 		Context:            params.Context,
 		Client:             params.HTTPClient,
 	})
