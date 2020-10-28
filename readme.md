@@ -24,11 +24,13 @@ CAN:
     + please refer to [Authentication sample](https://goswagger.io/tutorial/authentication/) for detail
 * session
     + ??? how to handle session (i.e. cookies)?
+    + ==> swagger.yml need to use apiKey of "Authorization" to simulate the official bearer header and customize api.UserSecurityAuth() callback function accordingly
 * static file server
     + does not natively support file server
-    + need to add a middleware to route between api (e.g. endpoint start with "/api/*" and file server (e.g. path with "/*")
+    + need to add a middleware to route between api (e.g. endpoint start with `/api/*`) and file server (e.g. path with `/*`)
 * run-time response type
     + ??? support run-time determine response type (e.g. html or json)?
+    + seems OpenAPI 2.0 just support static response type (i.e. does not support dynamic response type)
 
 CANNOT:
 * middleware
