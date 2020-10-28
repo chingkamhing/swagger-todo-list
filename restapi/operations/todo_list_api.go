@@ -57,9 +57,9 @@ func NewTodoListAPI(spec *loads.Document) *TodoListAPI {
 			return middleware.NotImplemented("operation todos.UpdateOne has not yet been implemented")
 		}),
 
-		// Applies when the "MY-API-KEY" header is set
+		// Applies when the "Authorization" header is set
 		UserSecurityAuth: func(token string) (interface{}, error) {
-			return nil, errors.NotImplemented("api key auth (UserSecurity) MY-API-KEY from header param [MY-API-KEY] has not yet been implemented")
+			return nil, errors.NotImplemented("api key auth (UserSecurity) Authorization from header param [Authorization] has not yet been implemented")
 		},
 		// default authorizer is authorized meaning no requests are blocked
 		APIAuthorizer: security.Authorized(),
@@ -98,7 +98,7 @@ type TodoListAPI struct {
 	JSONProducer runtime.Producer
 
 	// UserSecurityAuth registers a function that takes a token and returns a principal
-	// it performs authentication based on an api key MY-API-KEY provided in the header
+	// it performs authentication based on an api key Authorization provided in the header
 	UserSecurityAuth func(string) (interface{}, error)
 
 	// APIAuthorizer provides access control (ACL/RBAC/ABAC) by providing access to the request and authenticated principal
@@ -189,7 +189,7 @@ func (o *TodoListAPI) Validate() error {
 	}
 
 	if o.UserSecurityAuth == nil {
-		unregistered = append(unregistered, "MYAPIKEYAuth")
+		unregistered = append(unregistered, "AuthorizationAuth")
 	}
 
 	if o.TodosAddOneHandler == nil {

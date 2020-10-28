@@ -15,7 +15,7 @@ securityDefinitions:
   UserSecurity:
     type: apiKey
     in: header
-    name: MY-API-KEY
+    name: Authorization
   AdminSecurity:
     type: basic
 # apply all of the below endpoints with this security

@@ -29,7 +29,7 @@ var errUserSecurityAuth = errors.New(http.StatusUnauthorized, "user security aut
 const staticFilePath = "./build"
 
 // apiKey hard code token
-const authenApiKey = "MySecureAPIKey"
+const authenAPIKey = "Bearer MySecureAPIKey"
 
 //go:generate swagger generate server --target ../../swagger-todo-list --name TodoList --spec ../swagger/swagger.yml --principal interface{} --exclude-main
 
@@ -58,7 +58,7 @@ func configureAPI(api *operations.TodoListAPI) http.Handler {
 	// Applies when the Authorization header is set with the Basic scheme
 	api.UserSecurityAuth = func(token string) (interface{}, error) {
 		log.Printf("UserSecurityAuth: %v\n", token)
-		if token != authenApiKey {
+		if token != authenAPIKey {
 			return nil, errUserSecurityAuth
 		}
 		return myPrincipal{user: "admin"}, nil
