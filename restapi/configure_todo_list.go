@@ -148,3 +148,16 @@ func setupGlobalMiddleware(handler http.Handler) http.Handler {
 		),
 	)
 }
+
+// Execute implement jessevdk/go-flags command interface
+func (server *Server) Execute(args []string) error {
+	defer server.Shutdown()
+
+	server.ConfigureAPI()
+
+	if err := server.Serve(); err != nil {
+		return err
+	}
+
+	return nil
+}
