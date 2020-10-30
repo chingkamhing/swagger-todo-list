@@ -28,9 +28,14 @@ CAN:
 * static file server
     + does not natively support file server
     + need to add a middleware to route between api (e.g. endpoint start with `/api/*`) and file server (e.g. path with `/*`)
+* flags
+    + by default, it use jessevdk/go-flags
+    + it takes either flag argument and environment variable for configuration input
+    + able to add command by defining a global parser instance and implement each command in a separate file
 * run-time response type
     + ??? support run-time determine response type (e.g. html or json)?
     + seems OpenAPI 2.0 just support static response type (i.e. does not support dynamic response type)
+    + ==> may follow similar approach in middleware/not_implemented.go: create a custom function that return generic middleware.Responder; in the function, return a custom struct that implement interface WriteResponse() where it can response whatever the response type should be
 
 CANNOT:
 * middleware
