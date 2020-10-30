@@ -41,6 +41,13 @@ CANNOT:
 * middleware
     + seems cannot insert middleware into specific path or endpoint
 
+Note:
+* nil pointer dereference hazard
+    + the default endpoint params are pointer of the request variable (e.g. *int, *string)
+    + it is not a typical way to handle in golang
+    + may either change swagger.yml to make go-swagger to generate params in natural types (e.g. int, string)
+    + or convert the params to natural type before calling endpoint handlers
+
 ## Knowledge Base
 
 * [Writing OpenAPI (Swagger) Specification Tutorial Series](https://apihandyman.io/writing-openapi-swagger-specification-tutorial-part-1-introduction/)
