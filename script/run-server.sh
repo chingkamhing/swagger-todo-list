@@ -1,6 +1,6 @@
 #!/bin/bash
 #
-# Script file to run todo-list-server.
+# Script file to run todo-list server.
 #
 
 OPTS=""
@@ -11,7 +11,7 @@ SCRIPT_NAME=${0##*/}
 Usage () {
 	echo
 	echo "Description:"
-	echo "Script file to run todo-list-server."
+	echo "Script file to run todo-list server."
 	echo
 	echo "Usage: $SCRIPT_NAME [description]"
 	echo "Options:"
@@ -42,6 +42,6 @@ if [ "$#" -ne "$NUM_ARGS" ]; then
 	exit 1
 fi
 
-# run todo-list-server
-# note: invoke "todo-list-server --help" for all the flag description
-./todo-list-server --scheme http --port 8888 $OPTS
+# run todo-list server
+# note: invoke "todo-list server --help" for all the flag description
+./todo-list server --scheme http --port 8888 $OPTS
