@@ -19,14 +19,17 @@ func init() {
 
 	api := operations.NewTodoListAPI(swaggerSpec)
 	server = restapi.NewServer(api)
-	parser.AddCommand("server",
+	cmd, err := parser.AddCommand("server",
 		"Todo server",
 		"The server command run todo-list in server mode.",
 		server)
+	if err != nil {
+		defer server.Shutdown()
+		log.Fatalln(err)
+	}
 	server.ConfigureFlags()
 	for _, optsGroup := range api.CommandLineOptionsGroups {
-		// FIXME, should put the options under command "server"
-		_, err := parser.AddGroup(optsGroup.ShortDescription, optsGroup.LongDescription, optsGroup.Options)
+		_, err := cmd.AddGroup(optsGroup.ShortDescription, optsGroup.LongDescription, optsGroup.Options)
 		if err != nil {
 			defer server.Shutdown()
 			log.Fatalln(err)
