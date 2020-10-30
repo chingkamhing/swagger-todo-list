@@ -23,10 +23,14 @@ type myPrincipal struct {
 	user string
 }
 
-var errUserSecurityAuth = errors.New(http.StatusUnauthorized, "user security authentication error")
+// custom option flags
+// note: please refer https://godoc.org/github.com/jessevdk/go-flags#hdr-Available_field_tags for option's tag usage
+var option struct {
+	// static file server's root path
+	StaticFilePath string `long:"static" default:"./build" description:"Static file server's root path"`
+}
 
-// static file path
-const staticFilePath = "./build"
+var errUserSecurityAuth = errors.New(http.StatusUnauthorized, "user security authentication error")
 
 // apiKey hard code token
 const authenAPIKey = "Bearer MySecureAPIKey"
@@ -34,7 +38,13 @@ const authenAPIKey = "Bearer MySecureAPIKey"
 //go:generate swagger generate server --target ../../swagger-todo-list --name TodoList --spec ../swagger/swagger.yml --principal interface{} --exclude-main
 
 func configureFlags(api *operations.TodoListAPI) {
-	// api.CommandLineOptionsGroups = []swag.CommandLineOptionsGroup{ ... }
+	api.CommandLineOptionsGroups = []swag.CommandLineOptionsGroup{
+		{
+			ShortDescription: "configure flags",
+			LongDescription:  "Todo configuration flags",
+			Options:          &option,
+		},
+	}
 }
 
 func configureAPI(api *operations.TodoListAPI) http.Handler {
@@ -70,8 +80,7 @@ func configureAPI(api *operations.TodoListAPI) http.Handler {
 	})
 	api.TodosDeleteOneHandler = todos.DeleteOneHandlerFunc(func(params todos.DeleteOneParams, principal interface{}) middleware.Responder {
 		api.Logger("delete todo %+v\n", params.ID)
-		panic("you should not have a handler that just panics ;)")
-		// return middleware.NotImplemented("operation todos.DestroyOne has not yet been implemented")
+		return middleware.NotImplemented("operation todos.DestroyOne has not yet been implemented")
 	})
 	api.TodosFindTodosHandler = todos.FindTodosHandlerFunc(func(params todos.FindTodosParams, principal interface{}) middleware.Responder {
 		payload := []*models.Item{
@@ -135,7 +144,7 @@ func setupGlobalMiddleware(handler http.Handler) http.Handler {
 	log.Printf("setupGlobalMiddleware()\n")
 	return todoMiddleware.Recover(
 		todoMiddleware.Logger(
-			todoMiddleware.StaticFileServer(staticFilePath, handler),
+			todoMiddleware.StaticFileServer(option.StaticFilePath, handler),
 		),
 	)
 }
