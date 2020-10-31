@@ -16,6 +16,12 @@ func init() {
 	if err != nil {
 		log.Fatalln(err)
 	}
+	checkError := func(err error) {
+		if err != nil {
+			defer server.Shutdown()
+			log.Fatalln(err)
+		}
+	}
 
 	api := operations.NewTodoListAPI(swaggerSpec)
 	server = restapi.NewServer(api)
@@ -23,16 +29,10 @@ func init() {
 		"Todo server",
 		"The server command run todo-list in server mode.",
 		server)
-	if err != nil {
-		defer server.Shutdown()
-		log.Fatalln(err)
-	}
+	checkError(err)
 	server.ConfigureFlags()
 	for _, optsGroup := range api.CommandLineOptionsGroups {
 		_, err := cmd.AddGroup(optsGroup.ShortDescription, optsGroup.LongDescription, optsGroup.Options)
-		if err != nil {
-			defer server.Shutdown()
-			log.Fatalln(err)
-		}
+		checkError(err)
 	}
 }
