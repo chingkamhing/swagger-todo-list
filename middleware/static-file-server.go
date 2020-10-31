@@ -31,9 +31,9 @@ func StaticFileServer(assetPath string, next http.Handler) http.Handler {
 	fn := func(w http.ResponseWriter, r *http.Request) {
 		method := r.Method
 		url := r.URL.Path
-		if (method == apiRequest) && (strings.HasPrefix(url, apiPrefix)) {
+		if strings.HasPrefix(url, apiPrefix) {
 			next.ServeHTTP(w, r)
-		} else {
+		} else if method == apiRequest {
 			serveIndex(assetPath, http.FileServer(http.Dir(assetPath))).ServeHTTP(w, r)
 		}
 	}
