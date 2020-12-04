@@ -15,6 +15,8 @@ CAN:
     + able to add global middleware to handle something like panic recovery, log, compression, etc.
     + able to add after-route middleware to handle something like timeout, session, etc.
 * models
+    + ??? how to go primitive type instead of pointer?
+    + ==> if string, need to specify "minLength: 1" and "x-nullable: false"
     + ??? how to use the generated models (e.g. User, ToDoItem) with DB without translation (i.e. no copying from one struct to another struct)?
     + ==> may use 'x-go-custom-tag: "string"' to add tag in the fields of the models
     + please refer to [Schema generation rules](https://goswagger.io/use/models/schemas.html) for detail
