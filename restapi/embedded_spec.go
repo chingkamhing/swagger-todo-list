@@ -189,7 +189,8 @@ func init() {
         },
         "description": {
           "type": "string",
-          "minLength": 1
+          "minLength": 1,
+          "x-nullable": false
         },
         "id": {
           "type": "integer",
@@ -387,7 +388,8 @@ func init() {
         },
         "description": {
           "type": "string",
-          "minLength": 1
+          "minLength": 1,
+          "x-nullable": false
         },
         "id": {
           "type": "integer",

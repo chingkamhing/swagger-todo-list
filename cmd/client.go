@@ -109,7 +109,7 @@ func (option *getOptionStruct) Execute(args []string) error {
 		return err
 	}
 	for _, todo := range response.Payload {
-		fmt.Printf("%4d: Description=%q Completed=%v\n", todo.ID, *todo.Description, todo.Completed)
+		fmt.Printf("%4d: Description=%q Completed=%v\n", todo.ID, todo.Description, todo.Completed)
 	}
 	return nil
 }
@@ -132,7 +132,7 @@ func (option *updateOptionStruct) Execute(args []string) error {
 		Context: context.Background(),
 		Body: &models.Item{
 			ID:          1,
-			Description: swag.String("Todo task 1 (updated)"),
+			Description: "Todo task 1 (updated)",
 			Completed:   true,
 		},
 	}

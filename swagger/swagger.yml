@@ -115,6 +115,7 @@ definitions:
       description:
         type: string
         minLength: 1
+        x-nullable: false
       completed:
         type: boolean
   error:

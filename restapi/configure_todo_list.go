@@ -86,12 +86,12 @@ func configureAPI(api *operations.TodoListAPI) http.Handler {
 		payload := []*models.Item{
 			{
 				ID:          1,
-				Description: swag.String("Todo task 1"),
+				Description: "Todo task 1",
 				Completed:   false,
 			},
 			{
 				ID:          2,
-				Description: swag.String("Todo task 2"),
+				Description: "Todo task 2",
 				Completed:   false,
 			},
 		}
